@@ -1,7 +1,23 @@
-import React, { Component} from 'react'
+import React, { Component, PropTypes } from 'react'
 import {Link} from 'react-router'
 import moment from 'moment'
 import styles from './message.css'
+
+// el objeto PropTypes de React, nos sirve para definir los tipos de datos y si son requeridas 
+// las propiedades que almacenarán las propiedades del componentes
+
+const propTypes = {
+	onRetweet: PropTypes.func.isRequired,
+	onReplyTweet: PropTypes.func.isRequired,
+	onFavorite: PropTypes.func.isRequired,
+	date: PropTypes.string.isRequired,
+	username: PropTypes.string.isRequired,
+	picture: PropTypes.string.isRequired,
+	displayName: PropTypes.string.isRequired,
+	text: PropTypes.string.isRequired,
+	numRetweets: PropTypes.number.isRequired,
+	numFavorites: PropTypes.number.isRequired
+}
 
 class Message extends Component {
 	constructor(props) {
@@ -73,5 +89,7 @@ class Message extends Component {
 	}
 
 }
+
+Message.propTypes = propTypes
 
 export default Message
