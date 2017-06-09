@@ -8,7 +8,7 @@ const propTypes = {
 	onOpenText: PropTypes.func.isRequired
 }
 
-function ProfileBar ({picture}, {username}, {onOpenText}) {
+function ProfileBar ({picture, username, onOpenText}) {
 
 	return(
 		<div className={styles.root}>

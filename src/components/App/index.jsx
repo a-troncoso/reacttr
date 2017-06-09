@@ -1,5 +1,6 @@
 import React, { Component} from 'react'
 import {HashRouter, Match} from 'react-router'
+import firebase from 'firebase'
 
 import 'normalize-css'
 import styles from './app.css'
@@ -13,23 +14,40 @@ class App extends Component {
 	constructor() {
 		super()
 
-		this.state = {
-			user: {
-				photoURL: 'https://randomuser.me/api/portraits/thumb/men/1.jpg',
-				email: 'alvaro.mc2@gmail.com',
-				displayName: 'Alvarito',
-				location: 'Chile'
-			}
-		}
 		// this.state = {
-		// 	user: null
+		// 	user: {
+		// 		photoURL: 'https://randomuser.me/api/portraits/thumb/men/1.jpg',
+		// 		email: 'alvaro.mc2@gmail.com',
+		// 		displayName: 'Alvarito',
+		// 		location: 'Chile'
+		// 	}
 		// }
+		this.state = {
+			user: null
+		}
 
 		this.handleOnAuth = this.handleOnAuth.bind(this)
 	}
 
+	// ComponentWillMount hace la misma tarea que componentDidMount, 
+	// con la diferencia que sirven para apps isomorficas (rendereizadas en server)
+	// es una funcion q se ejecuta una vez se haya renderizado el componente
+	componentWillMount() {
+		firebase.auth().onAuthStateChanged(user => {
+			if (user) {
+				this.setState({user})
+			} else {
+				this.setState({user: null})
+			}
+		})
+	}
+
 	handleOnAuth () {
-		console.log('Auth')
+		const provider = new firebase.auth.GithubAuthProvider()
+
+		firebase.auth().signInWithPopup(provider)
+			.then(result => console.log(`${result.user.email} ha iniciado sesión`))
+			.catch(error => console.log(`Error: ${errror.code}: ${error.message}`))
 	}
 
 	render () {

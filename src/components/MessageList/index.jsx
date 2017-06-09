@@ -1,4 +1,4 @@
-import React, { PropTypes} from 'react'
+import React, { PropTypes } from 'react'
 
 import styles from './message-list.css'
 import Message from '../Message'
@@ -10,7 +10,7 @@ const propTypes = {
 	onReplyTweet: PropTypes.func.isRequired
 }
 
-function MessageList({ messages }, { onRetweet }, { onFavorite }, { onReplyTweet }) {
+function MessageList({ messages, onRetweet, onFavorite, onReplyTweet }) {
 
 		return(
 				<div className={styles.root}>
@@ -27,7 +27,7 @@ function MessageList({ messages }, { onRetweet }, { onFavorite }, { onReplyTweet
 								numFavorites={msg.favorites}
 								onRetweet={() => onRetweet(msg.id)}
 								onFavorite={() => onFavorite(msg.id)}
-								onReplyTweet={() => onReplyTweet(msg.id, msg.username)}
+								onReplyTweet={() => onReplyTweet(msg.id)}
 							/>
 							)
 					}).reverse()}

@@ -5,7 +5,7 @@ const cssModules = 'modules&importLoaders=1&localIdentName=[name]__[local]__[has
 
 module.exports = {
 	resolve: {
-		extensions: ['.js', '.jsx']
+		extensions: ['.js', '.jsx'],
 	},
 
 	entry: ['./src/index.jsx'],
@@ -17,9 +17,9 @@ module.exports = {
 
 	module: {
 		loaders: [{ /* Transpila de ES5 a ES6 */
-			test: /(.js|jsx)$/,
-			exclude: '/node_modules/',
-			loaders: ['babel-loader']
+			test: /(\.js|jsx)$/,
+			exclude: /node_modules/,
+			loader: 'babel-loader'
 		}, {
 			test: /\.css$/,
 			loader: `style-loader!css-loader?${cssModules}`

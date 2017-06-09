@@ -59,11 +59,13 @@ class Main extends Component {
 		event.preventDefault();
 		let newMessage = {
 			id: uuid.v4(),
+			text: event.target.text.value,
+			picture: this.props.user.photoURL,
 			username: this.props.user.email.split('@')[0],
 			displayName: this.props.user.displayName,
-			picture: this.props.user.photoURL,
 			date: Date.now(),
-			text: event.target.text.value
+			retweets: 0,
+			favorites: 0
 		}
 
 		this.setState({

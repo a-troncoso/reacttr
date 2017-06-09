@@ -8,7 +8,7 @@ const propTypes = {
 }
 
 // Es un componente representacional => se puede declarar solo como function
-function InputText({onSendText}, {unsernameToReply}, {onCloseText}) {
+function InputText({onSendText, unsernameToReply, onCloseText}) {
 	return(
 		<form className={styles.form} onSubmit={onSendText}>
 			<textarea className={styles.text} name="text" defaultValue={(unsernameToReply) ? `@${unsernameToReply} ` : ''}>

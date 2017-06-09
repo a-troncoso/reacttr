@@ -9,7 +9,7 @@ const propTypes = {
 	location: PropTypes.string.isRequired
 }
 
-function Profile({picture}, { displayName }, { username },{ emailAddress },{ location }){
+function Profile({picture, displayName, username, emailAddress, location }){
 	return(
 		<div className={styles.root}>
 			<img className={styles.avatar} src="picture" alt={displayName}/>
