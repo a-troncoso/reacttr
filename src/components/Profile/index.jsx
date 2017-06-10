@@ -12,7 +12,7 @@ const propTypes = {
 function Profile({picture, displayName, username, emailAddress, location }){
 	return(
 		<div className={styles.root}>
-			<img className={styles.avatar} src="picture" alt={displayName}/>
+			<img className={styles.avatar} src={picture} alt={displayName}/>
 			<span className={styles.name}>{displayName}</span>
 			<ul className={styles.data}>
 				<li>

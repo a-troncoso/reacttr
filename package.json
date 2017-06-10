@@ -4,6 +4,7 @@
   "description": "Project developed to learn React js",
   "main": "/build/app.js",
   "scripts": {
+    "production": "webpack -p",
     "build": "webpack --colors --display-error-details",
     "serve": "webpack-dev-server --content-base build/ --colors --progress",
     "start": "npm run build && npm run serve"

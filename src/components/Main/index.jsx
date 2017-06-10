@@ -1,13 +1,14 @@
 import React, { Component, PropTypes } from 'react'
 import uuid from 'uuid'
-import 'normalize-css'
+import firebase from 'firebase'
 
 import MessageList from '../MessageList'
 import InputText from '../InputText'
 import ProfileBar from '../ProfileBar'
 
 const propTypes = {
-	user: PropTypes.object.isRequired
+	user: PropTypes.object.isRequired,
+	onLogout: PropTypes.func.isRequired
 }
 
 class Main extends Component {
@@ -17,34 +18,7 @@ class Main extends Component {
 			user: Object.assign({}, this.props.user, {retweets: []}, {favorites: []}),
 			openText: false,
 			unsernameToReply: '',
-			messages: [{
-				id: uuid.v4(),
-				text: 'Mensaje de Álvaro',
-				picture: 'https://randomuser.me/api/portraits/thumb/men/50.jpg',
-				displayName: 'Álvaro Troncoso',
-				username: 'Alvarito',
-				date: Date.now() - 180000,
-				retweets: 0,
-				favorites: 0
-			}, {
-				id: uuid.v4(),
-				text: 'Mensaje de Mary',
-				picture: 'https://randomuser.me/api/portraits/thumb/women/50.jpg',
-				displayName: 'Mary Zuaznabar',
-				username: 'Zarita',
-				date: Date.now(),
-				retweets: 0,
-				favorites: 0
-			}, {
-				id: uuid.v4(),
-				text: 'Mensaje de Mila',
-				picture: 'https://randomuser.me/api/portraits/thumb/women/51.jpg',
-				displayName: 'Mila Troncoso',
-				username: 'Le wawé',
-				date: Date.now(),
-				retweets: 0,
-				favorites: 0
-			}]
+			messages: []
 		}
 
 		this.handleSendText = this.handleSendText.bind(this)
@@ -55,8 +29,25 @@ class Main extends Component {
 		this.handleReplyTweet = this.handleReplyTweet.bind(this)
 	}
 
+	componentWillMount() {
+		// firebase.databse().ref() -> referencia a la base de datos
+		const messageRef = firebase.database().ref().child('messages')
+
+		// child_added -> evento q se ejecuta cada vez q se agrega algo a la bd
+		// snapshot -> captura de la bd en ese momento
+		// napshot.val() -> valor q contiene snapshot
+		messageRef.on('child_added', snapshot => {
+			this.setState({
+				messages: this.state.messages.concat(snapshot.val()),
+				openText: false
+			})
+		})
+
+	}
+
 	handleSendText(event) {
 		event.preventDefault();
+
 		let newMessage = {
 			id: uuid.v4(),
 			text: event.target.text.value,
@@ -68,10 +59,14 @@ class Main extends Component {
 			favorites: 0
 		}
 
-		this.setState({
-			messages: this.state.messages.concat([newMessage]),
-			openText: false
-		})
+		const messageRef = firebase.database().ref().child('messages')
+		const messageID = messageRef.push()
+		messageID.set(newMessage)
+
+		// this.setState({
+		// 	messages: this.state.messages.concat([newMessage]),
+		// 	openText: false
+		// })
 	}
 	handleCloseText(event) {
 		event.preventDefault();
@@ -139,7 +134,9 @@ class Main extends Component {
 				<ProfileBar
 				picture={this.props.user.photoURL}
 				username={this.props.user.email.split('@')[0]}
-				onOpenText={this.handleOpenText}/>
+				onOpenText={this.handleOpenText}
+				onLogout={this.props.onLogout}
+				/>
 				{this.renderOpenText()}
 				<MessageList
 					messages={this.state.messages}

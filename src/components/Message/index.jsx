@@ -60,7 +60,6 @@ class Message extends Component {
 						<span className={styles.displayName}>{this.props.displayName}</span>
 						<span className={styles.username}>{this.props.username}</span>
 						<span className={styles.date}>{dateFormat}</span>
-						{this.props.text}
 					</div>
 					<h3>{this.props.text}</h3>
 					<div className={styles.buttons}>

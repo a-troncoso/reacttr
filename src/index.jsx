@@ -4,9 +4,6 @@ import React, {Component} from 'react'
 import {render} from 'react-dom'
 import firebase from 'firebase'
 
-// Automaticamente importa el index.jsx dentro de App
-import App from './components/App'
-
 firebase.initializeApp({
   apiKey: 'AIzaSyAWRiaZbS4In2cqFUE_JIx5cXKNgaL3hms',
   authDomain: 'curso-react-e6f5f.firebaseapp.com',
@@ -15,5 +12,9 @@ firebase.initializeApp({
   storageBucket: 'curso-react-e6f5f.appspot.com',
   messagingSenderId: '109415647511'
 })
+
+// Automaticamente importa el index.jsx dentro de App
+import App from './components/App'
+
 
 render(<App />, document.getElementById('root'))
